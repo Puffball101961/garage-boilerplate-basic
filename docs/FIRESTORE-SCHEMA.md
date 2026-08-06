@@ -46,4 +46,31 @@ This enables **lazy migration** — when a document is read, check `_schemaVersi
 
 ---
 
+## `notes` collection
+
+**Path:** `/notes/{noteId}` (auto-generated document ID)
+**Access:** Owner-only — a user can read and write only documents where `uid` matches their own
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `uid` | `string` | Yes | Owner's Firebase Auth UID — immutable after creation |
+| `title` | `string` | Yes | Note title, 1–200 characters |
+| `body` | `string` | Yes | Note content, up to 10,000 characters (may be empty) |
+| `createdAt` | `Timestamp` | Yes | When the document was created — immutable |
+| `updatedAt` | `Timestamp` | Yes | When the document was last updated |
+| `deletedAt` | `Timestamp \| null` | Yes | Soft-delete marker — `null` while the note is live |
+| `_schemaVersion` | `1` | Yes | Schema version for lazy migration |
+
+**Ownership:** The document ID is auto-generated, so ownership lives in the `uid` field rather than the path. Security rules read `resource.data.uid` on every operation.
+
+**Creation:** Via the `createNote` Server Action (`frontend/src/features/notes/actions/notes.actions.ts`). `uid` is taken from the verified session, never from client input.
+
+**Deletion:** Hard-delete is disabled in security rules (`allow delete: if false`). `deleteNote` sets `deletedAt` instead, and both the rules' `notDeleted()` guard and the `useNotes` query filter soft-deleted notes out.
+
+**Required index:** `uid ASC, deletedAt ASC, updatedAt DESC` — defined in `firebase/firestore.indexes.json`. The `useNotes` realtime query fails with `failed-precondition` until it is deployed.
+
+**Admin SDK caveat:** Server Actions use `adminDb`, which bypasses security rules entirely. Ownership is re-checked in code in each action; the rules protect the client SDK path used by `useNotes`.
+
+---
+
 <!-- Add new collection schemas below using the /firebase-collection skill -->

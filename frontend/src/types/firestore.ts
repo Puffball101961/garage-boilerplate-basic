@@ -23,3 +23,23 @@ export interface UserProfile {
 }
 
 export type CreateUserProfileInput = Omit<UserProfile, 'createdAt' | 'updatedAt'>
+
+export interface Note {
+  id: string
+  uid: string
+  title: string
+  body: string
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  /** Soft-delete marker — null while the note is live. See docs/FIRESTORE-SCHEMA.md */
+  deletedAt: Timestamp | null
+  _schemaVersion: 1
+}
+
+/**
+ * Client-supplied fields only. `uid` is taken from the verified session in the
+ * Server Action, never from the caller — see features/notes/actions.
+ */
+export type CreateNoteInput = Pick<Note, 'title' | 'body'>
+
+export type UpdateNoteInput = Partial<Pick<Note, 'title' | 'body'>>

@@ -49,6 +49,8 @@ Thumbs.db
 *.tsbuildinfo
 .turbo/
 service-account.json
+# Firebase console downloads service account keys under this name pattern
+*-firebase-adminsdk-*.json
 docs/BOILERPLATE-COMPARISON.md
 docs/BOILERPLATE-BENCHMARK.md
 
