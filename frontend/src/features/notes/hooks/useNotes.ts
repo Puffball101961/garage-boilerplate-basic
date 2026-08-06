@@ -15,7 +15,7 @@ import type { Note } from '@/types/firestore'
  * the subscription errors with `failed-precondition`.
  */
 export function useNotes() {
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const uid = user?.uid
 
   // getNotesCollection() builds a fresh CollectionReference on every call, and
@@ -35,10 +35,12 @@ export function useNotes() {
     orderBy('updatedAt', 'desc')
   )
 
-  // Signed out there is nothing to show, and the rules would reject the read
-  // anyway — report an idle state rather than surfacing a permission error.
+  // No uid means either "auth is still resolving" or "signed out", and the two
+  // need different answers. During SSR and first paint auth is always still
+  // resolving, so reporting loading:false here would render an empty state to
+  // every user — including those who do have notes — until hydration replaces it.
   if (!uid) {
-    return { notes: [] as Note[], loading: false, error: null }
+    return { notes: [] as Note[], loading: authLoading, error: null }
   }
 
   return { notes: data, loading, error }
