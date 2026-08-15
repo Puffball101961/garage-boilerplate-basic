@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
 import { signupSchema, type SignupInput } from '@/lib/validations/auth'
 import { FullPageSpinner } from '@/components/shared/LoadingSpinner'
+import { POST_AUTH_REDIRECT } from '@/lib/routes'
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -24,7 +25,7 @@ export default function SignUpPage() {
 
   useEffect(() => {
     if (!loading && !isSubmitting && user) {
-      router.replace('/dashboard')
+      router.replace(POST_AUTH_REDIRECT)
     }
   }, [loading, isSubmitting, user, router])
 
@@ -33,7 +34,7 @@ export default function SignUpPage() {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle()
-      router.replace('/dashboard')
+      router.replace(POST_AUTH_REDIRECT)
     } catch {
       toast.error('Google sign-in failed. Please try again.')
     }

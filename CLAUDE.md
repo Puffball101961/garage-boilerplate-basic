@@ -69,6 +69,7 @@ Everything a feature build needs already exists below. **Do not survey the codeb
 | `frontend/src/types/firestore.ts` | `UserProfile` — add new collection interfaces here (always with `_schemaVersion: 1`) | Collection types |
 | `frontend/src/lib/validations/` | `loginSchema`, `signupSchema`, `registerSchema`, `resetPasswordSchema` (`auth.ts`) · `idSchema`, `paginationSchema` (`common.ts`) | Zod schemas — add feature schemas here or in the feature folder |
 | `frontend/src/lib/utils.ts` | `cn()`, `formatDate`, `formatDatetime`, `truncate` | Class merging, formatting |
+| `frontend/src/lib/routes.ts` | `POST_AUTH_REDIRECT` | Where a signed-in user lands — used by both auth pages, `proxy.ts`, and the index |
 | `frontend/src/components/layout/` | `DashboardShell`, `Sidebar` (navItems array — add links here), `Navbar`, `PageHeader` | App shell |
 | `frontend/src/components/shared/` | `ErrorBoundary`, `LoadingSpinner`, `FullPageSpinner`, `EmptyState { title, description?, icon?, action? }` | Loading/empty/error states |
 | `frontend/src/app/api/auth/session/route.ts` | POST (token → `__session` cookie), DELETE | Already wired — don't touch for features |
@@ -91,7 +92,7 @@ Everything a feature build needs already exists below. **Do not survey the codeb
 
 ### Existing routes/pages
 
-Pages: `/` · `/auth/signin` · `/auth/signup` · `/dashboard` · `/notes` · `/team` · `/profile` · `/settings` (route groups `(auth)`, `(dashboard)`). Backend: `GET /api/health` (public); everything else under `/api` requires `Authorization: Bearer <ID token>`.
+Pages: `/` (redirects to `POST_AUTH_REDIRECT`) · `/auth/signin` · `/auth/signup` · `/dashboard` · `/notes` · `/team` · `/profile` · `/settings` (route groups `(auth)`, `(dashboard)`). Backend: `GET /api/health` (public); everything else under `/api` requires `Authorization: Bearer <ID token>`.
 
 ---
 

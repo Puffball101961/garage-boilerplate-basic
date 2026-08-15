@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
 import { loginSchema, type LoginInput } from '@/lib/validations/auth'
 import { FullPageSpinner } from '@/components/shared/LoadingSpinner'
+import { POST_AUTH_REDIRECT } from '@/lib/routes'
 
 export default function SignInPage() {
   const router = useRouter()
@@ -24,7 +25,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (!loading && user) {
-      router.replace('/dashboard')
+      router.replace(POST_AUTH_REDIRECT)
     }
   }, [loading, user, router])
 
@@ -41,7 +42,7 @@ export default function SignInPage() {
     try {
       await signInWithEmail(data.email, data.password)
       toast.success('Signed in successfully')
-      router.replace('/dashboard')
+      router.replace(POST_AUTH_REDIRECT)
       router.refresh()
     } catch (error: unknown) {
       if (error instanceof Error && error.message.includes('email-not-verified')) {
@@ -55,7 +56,7 @@ export default function SignInPage() {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle()
-      router.replace('/dashboard')
+      router.replace(POST_AUTH_REDIRECT)
     } catch {
       toast.error('Google sign-in failed. Please try again.')
     }
