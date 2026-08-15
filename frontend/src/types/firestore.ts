@@ -69,7 +69,7 @@ export interface TeamMember {
 
 /**
  * Fields supplied when seeding a member. There is no in-app write path —
- * documents are created with the Admin SDK via scripts/seed-team.mjs, which
+ * documents are created with the Admin SDK via scripts/seed-team.js, which
  * stamps the timestamps and `_schemaVersion`.
  */
 export type CreateTeamMemberInput = Pick<

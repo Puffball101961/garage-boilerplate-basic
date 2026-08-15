@@ -75,7 +75,7 @@ This enables **lazy migration** — when a document is read, check `_schemaVersi
 
 ## `team` collection
 
-**Path:** `/team/{memberId}` (auto-generated document ID)
+**Path:** `/team/{memberId}` (document ID is a slug of the member's name, e.g. `ada-lovelace`)
 **Access:** Public read — anyone, signed in or not, can read live members. Writes are admin-only.
 
 | Field | Type | Required | Description |
@@ -94,7 +94,7 @@ This enables **lazy migration** — when a document is read, check `_schemaVersi
 
 **Photos:** Firebase Cloud Storage is not part of this boilerplate (it requires the paid Blaze plan), so there is no upload path. `photoUrl` points at an image hosted elsewhere or committed under `frontend/public/`. `TeamMemberCard` renders it with `next/image` and `unoptimized`, which bypasses the Next image optimizer and therefore needs no `images.remotePatterns` entry in `next.config.ts` for each new host.
 
-**Creation:** No in-app write path. Seed with `node scripts/seed-team.mjs` (Admin SDK), or add documents by hand in the Firebase console.
+**Creation:** No in-app write path. Edit `scripts/team.seed.json` and run `pnpm run seed:team` (Admin SDK), or add documents by hand in the Firebase console. Because the document ID is derived from the name, re-seeding updates existing members rather than duplicating them, and preserves their original `createdAt`. Renaming a member creates a new document — soft-delete the old one.
 
 **Deletion:** Hard-delete is disabled in security rules (`allow delete: if false`). Set `deletedAt` instead — both the rules' `notDeleted()` guard and the `useTeam` query filter soft-deleted members out.
 

@@ -31,7 +31,7 @@ export function TeamList() {
       <EmptyState
         icon={Users}
         title="No team members yet"
-        description="Seed the roster with `node scripts/seed-team.mjs`, or add documents to the team collection in the Firebase console."
+        description="Seed the roster with `pnpm run seed:team`, or add documents to the team collection in the Firebase console."
       />
     )
   }

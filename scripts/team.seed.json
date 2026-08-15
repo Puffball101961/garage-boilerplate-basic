@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Ada Lovelace",
+    "role": "Project Lead",
+    "blurb": "Keeps the roadmap honest and the standups short. Owns the data model and the parts of the schema nobody else wants to touch.",
+    "photoUrl": null,
+    "order": 1
+  },
+  {
+    "name": "Grace Hopper",
+    "role": "Backend Engineer",
+    "blurb": "Writes the Cloud Functions routes and the tests that keep them working. Firmly believes a compiler should do the boring parts.",
+    "photoUrl": null,
+    "order": 2
+  },
+  {
+    "name": "Alan Turing",
+    "role": "Frontend Engineer",
+    "blurb": "Builds the React side and cares more about the empty state than the happy path.",
+    "photoUrl": null,
+    "order": 3
+  }
+]
