@@ -37,7 +37,9 @@ export function TeamList() {
   }
 
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    // Wrapping flex rather than a grid so a partial final row stays centred
+    // under the rows above, as in the design.
+    <ul className="flex flex-wrap items-start justify-center gap-x-8 gap-y-10">
       {members.map((member) => (
         <TeamMemberCard key={member.id} member={member} />
       ))}

@@ -1,23 +1,37 @@
 [
   {
-    "name": "Ada Lovelace",
-    "role": "Project Lead",
-    "blurb": "Keeps the roadmap honest and the standups short. Owns the data model and the parts of the schema nobody else wants to touch.",
+    "name": "Yueal Tesfay",
+    "role": "PM",
+    "blurb": "Coordinates the team, manages timelines, and ensures project goals are delivered on schedule.",
     "photoUrl": null,
     "order": 1
   },
   {
-    "name": "Grace Hopper",
-    "role": "Backend Engineer",
-    "blurb": "Writes the Cloud Functions routes and the tests that keep them working. Firmly believes a compiler should do the boring parts.",
+    "name": "Melito Castillo Jr",
+    "role": "BA",
+    "blurb": "Gathers and documents requirements, and ensures the solution meets stakeholder needs.",
     "photoUrl": null,
     "order": 2
   },
   {
-    "name": "Alan Turing",
-    "role": "Frontend Engineer",
-    "blurb": "Builds the React side and cares more about the empty state than the happy path.",
+    "name": "Milo Eckersley",
+    "role": "DEV",
+    "blurb": "Supports application development, integration, testing, and technical improvements.",
     "photoUrl": null,
     "order": 3
+  },
+  {
+    "name": "Zhihong Tan",
+    "role": "UX",
+    "blurb": "Designs clear, consistent, and user-friendly interfaces for the application.",
+    "photoUrl": null,
+    "order": 4
+  },
+  {
+    "name": "Joel Muscat",
+    "role": "DEV",
+    "blurb": "Focuses on implementing core application features and front-end functionality.",
+    "photoUrl": null,
+    "order": 5
   }
 ]

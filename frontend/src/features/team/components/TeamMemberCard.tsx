@@ -27,7 +27,9 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
   const photoUrl = photoFailed ? null : member.photoUrl
 
   return (
-    <li className="flex flex-col items-center rounded-lg border border-zinc-200 bg-white p-6 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+    // Structure follows the design; the rounded/shadowed surface is the card
+    // treatment from docs/DESIGN.md rather than the wireframe's plain box.
+    <li className="flex w-56 flex-col items-center rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
       {photoUrl ? (
         <Image
           src={photoUrl}
@@ -40,21 +42,21 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
           // no images.remotePatterns entry in next.config.ts.
           unoptimized
           onError={() => setPhotoFailed(true)}
-          className="h-24 w-24 rounded-full object-cover"
+          className="h-24 w-24 rounded-md object-cover"
         />
       ) : (
         <div
           aria-hidden="true"
-          className="flex h-24 w-24 items-center justify-center rounded-full bg-zinc-100 text-xl font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+          className="flex h-24 w-24 items-center justify-center rounded-md bg-zinc-200 text-lg font-medium text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
         >
           {initials(member.name)}
         </div>
       )}
 
-      <h3 className="mt-4 font-semibold">{member.name}</h3>
-      <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">{member.role}</p>
+      <h2 className="mt-4 text-center text-sm font-medium">{member.name}</h2>
+      <p className="mt-1 text-center text-sm text-zinc-600 dark:text-zinc-400">{member.role}</p>
       {member.blurb && (
-        <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">{member.blurb}</p>
+        <p className="mt-3 w-full text-sm text-zinc-600 dark:text-zinc-300">{member.blurb}</p>
       )}
     </li>
   )
