@@ -43,3 +43,36 @@ export interface Note {
 export type CreateNoteInput = Pick<Note, 'title' | 'body'>
 
 export type UpdateNoteInput = Partial<Pick<Note, 'title' | 'body'>>
+
+export interface TeamMember {
+  id: string
+  name: string
+  /** Job title shown under the name, e.g. "Backend Engineer" */
+  role: string
+  /** Short bio paragraph rendered on the card */
+  blurb: string
+  /**
+   * Absolute URL (https://…) or a repo-relative path under /public
+   * (e.g. /images/team/ada.jpg). null renders the initials fallback —
+   * Cloud Storage is not available on the Spark plan, so photos are never
+   * uploaded through the app.
+   */
+  photoUrl: string | null
+  /** Ascending display order on the team page; ties break by name */
+  order: number
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  /** Soft-delete marker — null while the member is live. See docs/FIRESTORE-SCHEMA.md */
+  deletedAt: Timestamp | null
+  _schemaVersion: 1
+}
+
+/**
+ * Fields supplied when seeding a member. There is no in-app write path —
+ * documents are created with the Admin SDK via scripts/seed-team.mjs, which
+ * stamps the timestamps and `_schemaVersion`.
+ */
+export type CreateTeamMemberInput = Pick<
+  TeamMember,
+  'name' | 'role' | 'blurb' | 'photoUrl' | 'order'
+>

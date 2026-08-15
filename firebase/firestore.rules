@@ -87,6 +87,48 @@ service cloud.firestore {
       allow delete: if false; // soft-delete only — set deletedAt instead
     }
 
+    // team/{memberId}
+    // Public roster: readable by anyone, including signed-out visitors, so the
+    // same collection can back a marketing page later. Nothing here is private —
+    // only the name, role, blurb and photo URL the team chose to publish.
+    // Writes are admin-only; in practice members are seeded with the Admin SDK
+    // (scripts/seed-team.mjs), which bypasses these rules entirely.
+    match /team/{memberId} {
+      allow read: if notDeleted();
+
+      allow create: if isAdmin()
+        && request.resource.data.keys().hasAll(['name', 'role', 'blurb', 'photoUrl', 'order', 'createdAt', 'updatedAt', 'deletedAt', '_schemaVersion'])
+        && request.resource.data.keys().hasOnly(['name', 'role', 'blurb', 'photoUrl', 'order', 'createdAt', 'updatedAt', 'deletedAt', '_schemaVersion'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 100
+        && request.resource.data.role is string
+        && request.resource.data.role.size() > 0
+        && request.resource.data.role.size() <= 100
+        && request.resource.data.blurb is string
+        && request.resource.data.blurb.size() <= 500
+        && (request.resource.data.photoUrl == null || request.resource.data.photoUrl is string)
+        && request.resource.data.order is int
+        && request.resource.data.deletedAt == null
+        && request.resource.data._schemaVersion == 1;
+
+      allow update: if isAdmin()
+        && request.resource.data.createdAt == resource.data.createdAt  // createdAt is immutable
+        && request.resource.data.keys().hasOnly(['name', 'role', 'blurb', 'photoUrl', 'order', 'createdAt', 'updatedAt', 'deletedAt', '_schemaVersion'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 100
+        && request.resource.data.role is string
+        && request.resource.data.role.size() > 0
+        && request.resource.data.role.size() <= 100
+        && request.resource.data.blurb is string
+        && request.resource.data.blurb.size() <= 500
+        && (request.resource.data.photoUrl == null || request.resource.data.photoUrl is string)
+        && request.resource.data.order is int;
+
+      allow delete: if false; // soft-delete only — set deletedAt instead
+    }
+
     // Add new collection rules above this comment using the /firebase-collection skill.
 
     // ── Default deny ───────────────────────────────────────────────────────
