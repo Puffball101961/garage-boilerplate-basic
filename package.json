@@ -17,6 +17,7 @@
     "format": "pnpm -r format",
     "typecheck": "pnpm -r typecheck",
     "bootstrap": "node scripts/bootstrap.js",
+    "seed:team": "node scripts/seed-team.js",
     "validate": "node scripts/validate-placeholders.js",
     "hooks": "lefthook install",
     "prepare": "lefthook install"
